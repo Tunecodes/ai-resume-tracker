@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import Robot from "@/app/components/robot";
 
 export default function ResumeUpload() {
   const [loading, setLoading] = useState(false);
@@ -46,6 +47,7 @@ export default function ResumeUpload() {
 
   return (
     <div className="w-full max-w-md mx-auto mt-8">
+      <Robot text={"Please drop your resume in the box below."} />
       <div
         {...getRootProps()}
         className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors
