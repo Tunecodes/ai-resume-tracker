@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS resumes (
   user_id UUID NOT NULL,
   file_name TEXT,
   raw_text TEXT,
+  parsed_json JSONB,
 
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW(),

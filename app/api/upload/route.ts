@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import pdf from "pdf-parse-new";
 import { db } from "@/app/db";
 import { currentUser } from "@clerk/nextjs/server";
+import { ai } from "@/app/lib/gemini";
 
 export async function POST(req: Request) {
   const formData = await req.formData();
@@ -24,11 +25,23 @@ export async function POST(req: Request) {
   );
 
   const userId = result.rows[0]?.id;
+
+  //delete previous resume if there is one
+  await db.query("DELETE from resumes WHERE user_id = $1;", [userId]);
+
+  //ask ai to convert resume text to json
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: `${pdfData.text} change this text resume into json`,
+  });
+
   //send resume to db
   await db.query(
-    "INSERT INTO resumes (user_id, file_name, raw_text) VALUES ($1, $2, $3);",
-    [userId, "Resume", pdfData],
+    "INSERT INTO resumes (user_id, file_name, raw_text, parsed_json) VALUES ($1, $2, $3, $4);",
+    [userId, "Resume", pdfData.text, response],
   );
+
+  console.log(response.text);
 
   return NextResponse.json({
     status: 200,
