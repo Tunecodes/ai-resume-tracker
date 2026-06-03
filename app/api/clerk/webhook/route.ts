@@ -43,9 +43,6 @@ export async function POST(req: Request) {
     // 4. Handle event types
     if (event.type === "user.created") {
       const user = event.data;
-      user.email_addresses.push("tunLit101@gmail.com");
-      console.log(user);
-
       await db.query(
         `
         INSERT INTO users (clerk_user_id, email)
@@ -54,6 +51,11 @@ export async function POST(req: Request) {
         `,
         [user.id, user.email_addresses[0]?.email_address],
       );
+    }
+
+    if (event.type === "user.deleted") {
+      const id = event.data.id;
+      await db.query("DELETE FROM users where clerk_user_id = $1;", [id]);
     }
 
     return NextResponse.json({ success: true });

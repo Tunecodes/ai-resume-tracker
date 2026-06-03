@@ -6,14 +6,13 @@ import Robot from "@/app/components/robot";
 
 export default function ResumeUpload() {
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState(false);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (!file) return;
 
     setLoading(true);
-    setStatus("Reading file and extracting text...");
 
     // 1. Prepare file data to send via HTTP
     const formData = new FormData();
@@ -28,10 +27,10 @@ export default function ResumeUpload() {
 
       if (!response.ok) throw new Error("Upload failed.");
 
-      setStatus("Success! Resume parsed and saved.");
+      setStatus(true);
     } catch (error) {
       console.error(error);
-      setStatus("Error parsing your resume. Try again.");
+      setStatus(false);
     } finally {
       setLoading(false);
     }
@@ -47,7 +46,15 @@ export default function ResumeUpload() {
 
   return (
     <div className="w-full max-w-md mx-auto mt-8">
-      <Robot text={"Please drop your resume in the box below."} />
+      <Robot
+        text={
+          status
+            ? "Resume Uploaded"
+            : loading
+              ? "Uploading resume"
+              : "Upload your resume by dragging it into the box below or clicking to browse."
+        }
+      />
       <div
         {...getRootProps()}
         className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors

@@ -28,15 +28,15 @@ export default function SpeechBubble({ text, typingSpeed = 50 }) {
   }, [text, typingSpeed]);
 
   return (
-    <div className="relative flex justify-center">
+    <div className="relative flex justify-center text-gray-800 text-sm font-mono">
       <div
         className={`
           relative
-          max-w-[220px]
+          max-w-[400px]
           px-3 py-2
-          text-sm
+          text-lg
           text-black
-          bg-white
+          bg-white/80
           border
           rounded-2xl
           shadow-md
@@ -47,16 +47,7 @@ export default function SpeechBubble({ text, typingSpeed = 50 }) {
         {displayed}
 
         {/* bubble tail */}
-        <div className="absolute left-1/2 -bottom-2 w-3 h-3 bg-white border-b border-r rotate-45"></div>
-
-        {/* typing dots */}
-        {isTyping && (
-          <div className="absolute -bottom-5 left-2 text-xs text-gray-400 flex gap-1">
-            <span className="animate-bounce">.</span>
-            <span className="animate-bounce [animation-delay:150ms]">.</span>
-            <span className="animate-bounce [animation-delay:300ms]">.</span>
-          </div>
-        )}
+        <div className="absolute left-1/2 -bottom-2 w-3 h-3 bg-white/70 border-0 border-r rotate-45"></div>
       </div>
     </div>
   );
