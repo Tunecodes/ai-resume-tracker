@@ -1,22 +1,20 @@
-export default function ProjectsSection({
-  projects,
-}: {
-  projects: { name: string; description?: string }[];
-}) {
-  return (
-    <div className="bg-white p-6 rounded-xl shadow">
-      <h2 className="text-lg font-semibold mb-3">Projects</h2>
+import Card from "./card";
+import ProjectCard from "./project-card";
 
-      <div className="space-y-3">
-        {projects.map((p) => (
-          <div key={p.name} className="border p-3 rounded-lg">
-            <p className="font-medium">{p.name}</p>
-            <p className="text-sm text-gray-500">
-              {p.description}
-            </p>
-          </div>
-        ))}
+export default function ProjectsSection() {
+  return (
+    <Card title="Projects">
+      <div className="space-y-4">
+        <ProjectCard
+          name="ResumeAI"
+          description="AI-powered resume analysis platform."
+        />
+
+        <ProjectCard
+          name="Cough Detection"
+          description="Machine learning system for cough classification."
+        />
       </div>
-    </div>
+    </Card>
   );
 }

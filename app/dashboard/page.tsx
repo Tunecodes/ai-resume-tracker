@@ -1,39 +1,44 @@
-import { Resume } from "../lib/types";
-import ProfileCard from "../components/dashboard/profile-card";
+import StatCard from "../components/dashboard/state-card";
+import ResumeSummary from "../components/dashboard/resume-summary";
 import SkillsSection from "../components/dashboard/skill-section";
-import ProjectsSection from "../components/dashboard/project-section";
 import JobMatches from "../components/dashboard/job-matches";
-import AIInsights from "../components/dashboard/ai-panel";
-import Navbar from "../components/nav";
-
-// mock data for now (replace with DB fetch later)
-const resume: Resume = {
-  id: "1",
-  file_name: "resume.pdf",
-  parsed_json: {
-    name: "Tun Lin Naine",
-    skills: ["React", "Node.js", "PostgreSQL"],
-    education: [{ school: "UMass Amherst", degree: "CS" }],
-    projects: [{ name: "Resume AI", description: "AI resume parser" }],
-  },
-};
+import AIInsights from "../components/dashboard/ai-insight";
+import ProjectsSection from "../components/dashboard/project-section";
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-6xl mx-auto grid grid-cols-3 gap-6">
-        {/* LEFT MAIN */}
-        <div className="col-span-2 space-y-6">
-          <ProfileCard resume={resume} />
-          <SkillsSection skills={resume.parsed_json.skills || []} />
-          <ProjectsSection projects={resume.parsed_json.projects || []} />
-        </div>
+    <div className="min-h-screen bg-zinc-950 text-white">
+      <div className="mx-auto max-w-7xl p-6 space-y-6">
+        <section>
+          <h1 className="text-3xl font-bold">Welcome Back</h1>
+          <p className="text-zinc-400">
+            Track your resume, discover opportunities, and improve your ATS
+            score.
+          </p>
+        </section>
 
-        {/* RIGHT SIDEBAR */}
-        <div className="space-y-6">
-          <JobMatches skills={resume.parsed_json.skills || []} />
-          <AIInsights />
-        </div>
+        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <StatCard title="Resume Score" value="82" subtitle="ATS Ready" />
+
+          <StatCard title="Skills Found" value="14" subtitle="Across Resume" />
+
+          <StatCard title="Job Matches" value="27" subtitle="Available" />
+
+          <StatCard title="Projects" value="5" subtitle="Detected" />
+        </section>
+
+        <section className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2 space-y-6">
+            <ResumeSummary />
+            <SkillsSection skills={["cooking", "cleaning"]} />
+            <ProjectsSection />
+          </div>
+
+          <div className="space-y-6">
+            <JobMatches />
+            <AIInsights />
+          </div>
+        </section>
       </div>
     </div>
   );
