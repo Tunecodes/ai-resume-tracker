@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
+import { orbitron } from "./lib/font";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-full">
+      <body className={`${orbitron.className} min-h-full text-2xl`}>
         <ClerkProvider>{children}</ClerkProvider>
       </body>
     </html>

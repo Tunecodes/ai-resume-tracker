@@ -7,7 +7,7 @@ import ProjectsSection from "../components/dashboard/project-section";
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-zinc-950 text-white">
+    <div className="min-h-screen bg-gray text-white">
       <div className="mx-auto max-w-7xl p-6 space-y-6">
         <section>
           <h1 className="text-3xl font-bold">Welcome Back</h1>
