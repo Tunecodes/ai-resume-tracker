@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import pdf from "pdf-parse-new";
 import { db } from "@/app/db";
-import { currentUser } from "@clerk/nextjs/server";
 import { ai } from "@/app/lib/gemini";
+import { Id } from "@/app/lib/utility";
 
 export async function POST(req: Request) {
   const formData = await req.formData();
@@ -18,13 +18,7 @@ export async function POST(req: Request) {
   const pdfData = await pdf(buffer);
 
   //get logged in user
-  const clerkUser = await currentUser();
-  const result = await db.query(
-    "SELECT id from users WHERE clerk_user_id = $1;",
-    [clerkUser.id],
-  );
-
-  const userId = result.rows[0]?.id;
+  const userId = Id;
 
   //delete previous resume if there is one
   await db.query("DELETE from resumes WHERE user_id = $1;", [userId]);
