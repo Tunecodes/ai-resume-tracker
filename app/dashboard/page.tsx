@@ -4,8 +4,9 @@ import SkillsSection from "../components/dashboard/skill-section";
 import JobMatches from "../components/dashboard/job-matches";
 import AIInsights from "../components/dashboard/ai-insight";
 import ProjectsSection from "../components/dashboard/project-section";
+import ResumeScoreCard from "../components/dashboard/resume-score";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray text-white">
       <div className="mx-auto max-w-7xl p-6 space-y-6">
@@ -18,7 +19,7 @@ export default function DashboardPage() {
         </section>
 
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard title="Resume Score" value="82" subtitle="ATS Ready" />
+          <ResumeScoreCard />
 
           <StatCard title="Skills Found" value="14" subtitle="Across Resume" />
 

@@ -1,26 +1,33 @@
 import { db } from "../db";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 
-//this function get the user id which can be passed everywhere
-const clerkUser = await currentUser();
-const result = await db.query(
-  "SELECT id from users WHERE clerk_user_id = $1;",
-  [clerkUser.id],
-);
+export async function getUserId() {
+  const { userId } = await auth();
 
-const Id = result.rows[0]?.id;
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
 
-async function getResume() {
+  const result = await db.query(
+    "SELECT id FROM users WHERE clerk_user_id = $1",
+    [userId],
+  );
+
+  return result.rows[0]?.id;
+}
+
+export async function getResume() {
+  const userId = await getUserId();
+
   const result = await db.query(
     "SELECT raw_text, parsed_json FROM resumes WHERE user_id = $1",
-    [Id],
+    [userId],
   );
 
   const resume = result.rows[0];
+
   return {
     rawText: resume.raw_text,
     parsedJson: resume.parsed_json,
   };
 }
-
-export { Id, getResume };
